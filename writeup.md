@@ -21,9 +21,9 @@
 [image1]: ./misc/rover_image.jpg
 [image2]: ./calibration_images/example_grid2.jpg
 [image3]: ./calibration_images/example_rock2.jpg 
-[image4]: ./output/perspective.jpg 
+[image4]: ./output/perspective.png 
 [image5]: ./output/warped_threshed.jpg
-[image6]: ./output/rocks.jpg
+[image6]: ./output/rocks.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
