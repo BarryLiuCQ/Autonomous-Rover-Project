@@ -22,6 +22,8 @@
 [image2]: ./calibration_images/example_grid2.jpg
 [image3]: ./calibration_images/example_rock2.jpg 
 [image4]: ./output/perspective.jpg 
+[image5]: ./output/warped_threshed.jpg
+[image6]: ./output/rocks.jpg
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -70,8 +72,7 @@ def find_rocks(img, levels=(110, 110, 50)):
      color_select[rockpix] = 1
      return color_select
 ```
-
-
+![alt text][image5]![alt text][image6]
 
 ### Autonomous Navigation and Mapping
 
