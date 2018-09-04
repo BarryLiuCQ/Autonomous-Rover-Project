@@ -21,6 +21,7 @@
 [image1]: ./misc/rover_image.jpg
 [image2]: ./calibration_images/example_grid2.jpg
 [image3]: ./calibration_images/example_rock2.jpg 
+[image4]: ./output/perspective.jpg 
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -32,10 +33,46 @@
 ![alt text][image2]
 ![alt text][image3]
 
-#### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
+#### 2. Perspective Transform
+Using CV2 to perform Perspective transform,then having a mask that leave only the Field of View (FOV) which is useful for applying to the obstacle image.
 
-![alt text][image2]
+```python
+def perspect_transform(img, src, dst):
+           
+    M = cv2.getPerspectiveTransform(src, dst)
+    warped = cv2.warpPerspective(img, M, (img.shape[1], img.shape[0]))# keep same size as input image
+    mask = cv2.warpPerspective(np.ones_like(img[:,:,0]), M, (img.shape[1], img.shape[0]))#show field view of the camera
+    return warped, mask
+```
+![alt text][image4]
+
+#### 3. Color Thresholding
+Apply color thresholding for both warped image(RGB>110) and rocks(R > 110 , G > 110 , B < 50)
+
+for Warped image:
+```python
+def color_thresh(img, rgb_thresh=(160, 160, 160)):
+    color_select = np.zeros_like(img[:,:,0])
+    above_thresh = (img[:,:,0] > rgb_thresh[0]) \
+                & (img[:,:,1] > rgb_thresh[1]) \
+                & (img[:,:,2] > rgb_thresh[2])
+    color_select[above_thresh] = 1
+    return color_select
+threshed = color_thresh(warped)
+```
+for Rocks:
+```python
+def find_rocks(img, levels=(110, 110, 50)):
+    color_select = np.zeros_like(img[:,:,0])
+    rockpix = (img[:,:,0] > levels[0]) \
+                & (img[:,:,1] > levels[1]) \
+                & (img[:,:,2] < levels[2])
+     color_select[rockpix] = 1
+     return color_select
+```
+
+
+
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
