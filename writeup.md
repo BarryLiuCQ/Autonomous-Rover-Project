@@ -22,7 +22,7 @@
 [image2]: ./calibration_images/example_grid2.jpg
 [image3]: ./calibration_images/example_rock2.jpg 
 [image4]: ./output/perspective.png 
-[image5]: ./output/warped_threshed.png
+[image5]: ./output/warped_threshed.jpg
 [image6]: ./output/rocks.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
