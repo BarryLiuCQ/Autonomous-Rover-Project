@@ -1,7 +1,8 @@
 [//]: # (Image References)
 [image_0]: ./misc/rover_image.jpg
 # Search and Sample Return Project 
-## My First project of Udacity Robotics Engineer Nanodegree.See more info in [writeup.md](./writeup.md)
+## My First project of Udacity Robotics Engineer Nanodegree.
+###See more info in [writeup.md](./writeup.md)
 
 ![alt text][image_0] 
 
