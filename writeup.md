@@ -72,7 +72,8 @@ def find_rocks(img, levels=(110, 110, 50)):
      color_select[rockpix] = 1
      return color_select
 ```
-![alt text][image5]![alt text][image6]
+![alt text][image5]
+![alt text][image6]
 
 ### Autonomous Navigation and Mapping
 
