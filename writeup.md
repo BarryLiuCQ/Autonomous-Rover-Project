@@ -36,7 +36,7 @@
 ![alt text][image3]
 
 #### 2. Perspective Transform
-Using CV2 to perform Perspective transform,then having a mask that leave only the Field of View (FOV) which is useful for applying to the obstacle image.
+Using CV2 to perform Perspective transform,having a mask that leave only the Field of View (FOV) which is useful for applying to the obstacle image.
 
 ```python
 def perspect_transform(img, src, dst):
