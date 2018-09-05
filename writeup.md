@@ -24,7 +24,7 @@
 [image4]: ./output/perspective.png 
 [image5]: ./output/warped_threshed.jpg
 [image6]: ./output/rocks.png
-
+[image7]: ./output/coords_transform.png
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
@@ -74,6 +74,42 @@ def find_rocks(img, levels=(110, 110, 50)):
 ```
 ![alt text][image5]
 ![alt text][image6]
+#### 4. Coordinate Transformations
+(1)Extract x,y positions from color threshed image and convert to rover coords.(2)Convert rover coords to polar coords to calculate distance and angle.(3)Map rover space pixels to world space
+```python
+def rover_coords(binary_img):
+    ypos, xpos = binary_img.nonzero()
+    x_pixel = -(ypos - binary_img.shape[0]).astype(np.float)
+    y_pixel = -(xpos - binary_img.shape[1]/2 ).astype(np.float)
+    return x_pixel, y_pixel
+
+def to_polar_coords(x_pixel, y_pixel):
+    dist = np.sqrt(x_pixel**2 + y_pixel**2)
+    angles = np.arctan2(y_pixel, x_pixel)
+    return dist, angles
+
+def rotate_pix(xpix, ypix, yaw):
+    yaw_rad = yaw * np.pi / 180
+    xpix_rotated = (xpix * np.cos(yaw_rad)) - (ypix * np.sin(yaw_rad))
+                            
+    ypix_rotated = (xpix * np.sin(yaw_rad)) + (ypix * np.cos(yaw_rad))
+    return xpix_rotated, ypix_rotated
+
+def translate_pix(xpix_rot, ypix_rot, xpos, ypos, scale): 
+    xpix_translated = (xpix_rot / scale) + xpos
+    ypix_translated = (ypix_rot / scale) + ypos
+    return xpix_translated, ypix_translated
+
+
+def pix_to_world(xpix, ypix, xpos, ypos, yaw, world_size, scale):
+    xpix_rot, ypix_rot = rotate_pix(xpix, ypix, yaw)
+    xpix_tran, ypix_tran = translate_pix(xpix_rot, ypix_rot, xpos, ypos, scale)
+    x_pix_world = np.clip(np.int_(xpix_tran), 0, world_size - 1)
+    y_pix_world = np.clip(np.int_(ypix_tran), 0, world_size - 1)
+    return x_pix_world, y_pix_world
+```
+![alt text][image7]
+
 
 ### Autonomous Navigation and Mapping
 
