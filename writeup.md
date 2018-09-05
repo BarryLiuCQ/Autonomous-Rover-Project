@@ -25,6 +25,7 @@
 [image5]: ./output/warped_threshed.jpg
 [image6]: ./output/rocks.png
 [image7]: ./output/coords_transform.jpg
+[image8]: ./output/autonomous.jpg
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
@@ -184,15 +185,16 @@ def perception_step(Rover):
     return Rover
 ```
 #### decision_step()
-
+Without doing any modification in decision_step, the rover did a somewhat decent job. 
+In the future, I would like to modify the code and let the rover to follow the wall.
 
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
-
-
+The rover seems to be OK, but sometimes it run in circles on an open ground and get stuck when goes into a corner surrounded by rocks.The fidility is around 60%. 
+Note: Resolution : 1024* 768 ; Graphics Quality: Good
+![alt text][image8]
 **Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+If I were to pursue this project further I think I could improve the fidility as well as introduce a function to pickup the rocks and return it to the center. 
 
 
 
-![alt text][image3]
