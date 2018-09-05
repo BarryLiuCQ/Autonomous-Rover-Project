@@ -21,9 +21,9 @@
 [image1]: ./misc/rover_image.jpg
 [image2]: ./calibration_images/example_grid2.jpg
 [image3]: ./calibration_images/example_rock2.jpg 
-[image4]: ./output/perspective.jpg 
+[image4]: ./output/perspective.png 
 [image5]: ./output/warped_threshed.jpg
-[image6]: ./output/rocks.jpg
+[image6]: ./output/rocks.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -36,7 +36,7 @@
 ![alt text][image3]
 
 #### 2. Perspective Transform
-Using CV2 to perform Perspective transform,then having a mask that leave only the Field of View (FOV) which is useful for applying to the obstacle image.
+Using CV2 to perform Perspective transform,having a mask that leave only the Field of View (FOV) which is useful for applying to the obstacle image.
 
 ```python
 def perspect_transform(img, src, dst):
@@ -72,7 +72,8 @@ def find_rocks(img, levels=(110, 110, 50)):
      color_select[rockpix] = 1
      return color_select
 ```
-![alt text][image5]![alt text][image6]
+![alt text][image5]
+![alt text][image6]
 
 ### Autonomous Navigation and Mapping
 
