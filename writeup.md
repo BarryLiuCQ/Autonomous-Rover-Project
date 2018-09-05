@@ -24,7 +24,7 @@
 [image4]: ./output/perspective.png 
 [image5]: ./output/warped_threshed.jpg
 [image6]: ./output/rocks.png
-[image7]: ./output/coords_transform.png
+[image7]: ./output/coords_transform.jpg
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
@@ -49,7 +49,7 @@ def perspect_transform(img, src, dst):
 ![alt text][image4]
 
 #### 3. Color Thresholding
-Apply color thresholding for both warped image(RGB>110) and rocks(R > 110 , G > 110 , B < 50)
+Apply color thresholding for both warped image(RGB>160) and rocks(R > 110 , G > 110 , B < 50)
 
 for Warped image:
 ```python
