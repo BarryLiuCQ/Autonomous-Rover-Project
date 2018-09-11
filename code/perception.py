@@ -148,6 +148,6 @@ def perception_step(Rover):
 
           Rover.worldmap[rock_ycen,rock_xcen,1] = 255
           Rover.vision_image[:,:,1] = rock_map*255
-        else:
+      else:
           Rover.vision_image[:,:,1] = 0
       return Rover
