@@ -158,43 +158,49 @@ def perception_step(Rover):
         # Example: Rover.worldmap[obstacle_y_world, obstacle_x_world, 0] += 1
         #          Rover.worldmap[rock_y_world, rock_x_world, 1] += 1
         #          Rover.worldmap[navigable_y_world, navigable_x_world, 2] += 1
-    Rover.worldmap[y_world,x_world,2] += 10
-    Rover.worldmap[obs_y_world,obs_x_world,0] += 1
-    # 8) Convert rover-centric pixel positions to polar coordinates
-    dist,angles = to_polar_coords(xpix,ypix)
-    # Update Rover pixel distances and angles
-        # Rover.nav_dists = rover_centric_pixel_distances
-        # Rover.nav_angles = rover_centric_angles
-    Rover.nav_angles = angles
-    
-    #find rocks
-    rock_map = find_rocks(warped,levels=(110,110,50))
-    if rock_map.any():
-        rock_x, rock_y = rover_coords(rock_map)
-        rock_x_world,rock_y_world = pix_to_world(rock_x,rock_y,Rover.pos[0],
-                                                 Rover.pos[1],Rover.yaw,world_size,scale)
-        rock_dist,rock_ang = to_polar_coords(rock_x,rock_y)
-        rock_idx = np.argmin(rock_dist)
-        rock_xcen = rock_x_world[rock_idx]
-        rock_ycen = rock_y_world[rock_idx]
- 
-        Rover.worldmap[rock_ycen,rock_xcen,1] = 255
-        Rover.vision_image[:,:,1] = rock_map*255
-    else:
-        Rover.vision_image[:,:,1] = 0
-    return Rover
+    if (Rover.pitch < 1.5 or Rover.pitch > 359) and (Rover.roll < 1.5 or Rover.roll > 359):
+      Rover.worldmap[y_world,x_world,2] += 10
+      Rover.worldmap[obs_y_world,obs_x_world,0] += 1
+      # 8) Convert rover-centric pixel positions to polar coordinates
+      dist,angles = to_polar_coords(xpix,ypix)
+      # Update Rover pixel distances and angles
+      # Rover.nav_dists = rover_centric_pixel_distances
+      # Rover.nav_angles = rover_centric_angles
+      Rover.nav_angles = angles
+
+      #find rocks
+      rock_map = find_rocks(warped,levels=(110,110,50))
+      if rock_map.any():
+          rock_x, rock_y = rover_coords(rock_map)
+          rock_x_world,rock_y_world = pix_to_world(rock_x,rock_y,Rover.pos[0],Rover.pos[1],Rover.yaw,world_size,scale)
+          rock_dist,rock_ang = to_polar_coords(rock_x,rock_y)
+          rock_idx = np.argmin(rock_dist)
+          rock_xcen = rock_x_world[rock_idx]
+          rock_ycen = rock_y_world[rock_idx]
+
+          Rover.worldmap[rock_ycen,rock_xcen,1] = 255
+          Rover.vision_image[:,:,1] = rock_map*255
+      else:
+          Rover.vision_image[:,:,1] = 0
+      return Rover
 ```
+(1)Updated the perception_step function by running the various functions used for porcessing the image,added the function necessary for obstacle/rock detection.
+(2)Pitch and roll values other than 0 will make the perspective transform above ineffective and corrupt the output map which will decrease fidelity. Therefore, I added a conditional ( if (Rover.pitch < 1.5 or Rover.pitch > 359) and (Rover.roll < 1.5 or Rover.roll > 359):) where the coordinates of the terrain, rocks and obstacles are added only if the pitch and roll values of the rover are within a certain value.
+
 #### decision_step()
 Without doing any modification in decision_step, the rover did a somewhat decent job. 
 In the future, I would like to modify the code and let the rover to follow the wall.
 
+#### The video created in Jupyter notebook is here: 
+https://github.com/BarryLiuCQ/Autonomous-Rover-Project/tree/master/output/test_mapping.mp4
+
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
-The rover seems to be OK, but sometimes it run in circles on an open ground and get stuck when goes into a corner surrounded by rocks.The fidility is around 60%. 
+The rover seems to be OK, but sometimes it run in circles on an open ground and get stuck when goes into corners surrounded by rocks.The fidility is around 60%. 
 Note: Resolution : 1024* 768 ; Graphics Quality: Good
 ![alt text][image8]
 **Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
 
-If I were to pursue this project further I think I could improve the fidility as well as introduce a function to pickup the rocks and return it to the center. 
+If I were to pursue this project further I think I could improve the fidility as well as introduce a function to pickup the rocks and return it to the center,or even use deeping learning technics for object detection.
 
 
 
